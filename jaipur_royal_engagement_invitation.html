@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Royal Engagement & Ring Ceremony | Ananya & Kabir</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Royal Rajasthani Serifs & Modern Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            olive: {
+              50: '#F4F6F3',
+              100: '#E6EAE4',
+              200: '#C8D2C4',
+              300: '#A5B59E',
+              400: '#83967C',
+              500: '#64775D', // Royal sage green from reference card
+              600: '#52624C',
+              700: '#404E3B',
+              800: '#2E392B',
+              900: '#1D241B',
+              deep: '#151A13',
+            },
+            parchment: {
+              DEFAULT: '#FDFBF7',
+              50: '#FFFFFF',
+              100: '#FAF7F0',
+              200: '#F3EDE2',
+              300: '#E7DEC9',
+            },
+            antiqueGold: {
+              DEFAULT: '#D4AF37',
+              light: '#E6CA65',
+              dark: '#A68214',
+              muted: '#C5A880',
+            },
+            jaipurRose: '#D98980',
+            jaipurClay: '#B86558',
+          },
+          fontFamily: {
+            royal: ['"Cinzel Decorative"', 'serif'],
+            serifHead: ['"Cinzel"', 'serif'],
+            scriptCursive: ['"Cormorant Garamond"', 'serif'],
+            body: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Prevent initial horizontal overflow */
+    html, body {
+      overflow-x: hidden;
+      background-color: #1a2217;
+      color: #FAF7F0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Clear Taj Mahal Background layer with Ken Burns motion */
+    .palace-bg-layer {
+      position: fixed;
+      inset: -5%;
+      width: 110vw;
+      height: 110vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+      filter: none;
+      animation: palaceKenBurns 32s ease-in-out infinite alternate;
+      transition: background-image 1.2s ease, opacity 0.3s ease;
+      will-change: transform;
+    }
+
+    @keyframes palaceKenBurns {
+      0% { transform: scale(1) translate(0px, 0px); }
+      50% { transform: scale(1.04) translate(-1%, 0.8%); }
+      100% { transform: scale(1.02) translate(1%, -0.8%); }
+    }
+
+    /* Soft veil overlay so Taj Mahal is clear while text stays readable */
+    .palace-green-veil {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 50% 30%, rgba(35, 45, 32, 0.35) 0%, rgba(22, 29, 20, 0.65) 60%, rgba(14, 18, 13, 0.85) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Fullscreen Envelope styles */
+    #sealedEnvelopeScreen {
+      perspective: 1400px;
+      transform-style: preserve-3d;
+      transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .envelope-top-flap {
+      transform-origin: top center;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flap-open {
+      transform: rotateX(180deg) !important;
+      z-index: 10 !important;
+    }
+
+    .envelope-dismissed {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: scale(1.08) translateY(-40px) !important;
+    }
+
+    /* Realistic 3D Oval Wax Seal Badge */
+    .wax-seal-badge {
+      background: radial-gradient(circle at 35% 30%, #FFFDF7 0%, #F5EEDB 45%, #DFD2B7 80%, #C4B291 100%);
+      box-shadow: 
+        0 14px 28px -6px rgba(0, 0, 0, 0.55),
+        0 4px 10px rgba(0, 0, 0, 0.3),
+        inset 0 3px 5px rgba(255, 255, 255, 0.9),
+        inset 0 -4px 6px rgba(110, 95, 70, 0.45);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    }
+
+    .wax-seal-badge:hover {
+      transform: scale(1.06) rotate(-1deg);
+      box-shadow: 
+        0 20px 35px -8px rgba(0, 0, 0, 0.65),
+        0 6px 14px rgba(0, 0, 0, 0.35),
+        inset 0 4px 6px rgba(255, 255, 255, 0.95),
+        inset 0 -4px 7px rgba(110, 95, 70, 0.5);
+    }
+
+    /* Arch Cutouts (Jharokha Silhouette) */
+    .jharokha-arch {
+      border-radius: 9999px 9999px 24px 24px;
+    }
+
+    /* Floating Drifting Canvas */
+    #petalsCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body class="min-h-screen relative selection:bg-antiqueGold selection:text-olive-900">
+
+  <!-- Clear Taj Mahal Background Layer & Veil -->
+  <div id="palaceBgLayer" class="palace-bg-layer" style="background-image: url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2600&q=95');"></div>
+  <div class="palace-green-veil"></div>
+
+  <!-- Petals Canvas -->
+  <canvas id="petalsCanvas"></canvas>
+
+  <!-- ========================================== -->
+  <!-- 1. FULLSCREEN SEALED CARD SCREEN (ON LOAD) -->
+  <!-- ========================================== -->
+  <div id="sealedEnvelopeScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-olive-900 bg-cover bg-center overflow-hidden" style="background-image: radial-gradient(circle at center, #4A5B45 0%, #2A3626 75%, #182016 100%);">
+    
+    <!-- Fine Linen Texture overlay -->
+    <div class="absolute inset-0 opacity-25 bg-[radial-gradient(#FAF7F0_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none"></div>
+
+    <!-- Outer Gold Royal Border -->
+    <div class="absolute inset-4 md:inset-8 border-2 border-antiqueGold/40 pointer-events-none rounded-2xl flex flex-col justify-between p-3">
+      <div class="flex justify-between items-center text-antiqueGold/70">
+        <i data-lucide="sparkles" class="w-5 h-5"></i>
+        <span class="font-serifHead tracking-[0.3em] text-[10px] uppercase font-bold">Royal Farmaan</span>
+        <i data-lucide="sparkles" class="w-5 h-5"></i>
+      </div>
+      <div class="flex justify-between items-center text-antiqueGold/70">
+        <i data-lucide="crown" class="w-4 h-4"></i>
+        <i data-lucide="crown" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- Triangular Top Flap -->
+    <div id="envelopeFlap" class="envelope-top-flap absolute top-0 left-0 w-full h-[50vh] z-20 pointer-events-none filter drop-shadow-2xl">
+      <svg class="w-full h-full" viewBox="0 0 1000 500" preserveAspectRatio="none">
+        <path d="M 0,0 L 1000,0 L 500,480 Z" fill="#3D4B39" stroke="#CFB17A" stroke-width="2.5" />
+        <!-- Lace Scallop Filigree -->
+        <path d="M 10,0 L 500,470 L 990,0" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.65" />
+      </svg>
+    </div>
+
+    <!-- Header Text Over Envelope -->
+    <div class="absolute top-[14vh] md:top-[16vh] text-center z-10 px-4 w-full">
+      <p class="font-scriptCursive italic text-2xl md:text-3xl text-antiqueGold font-semibold mb-1 tracking-wide">A Royal Invitation From</p>
+      <h2 id="displayCoupleEnvelope" class="font-royal text-2xl md:text-4xl lg:text-5xl font-black text-parchment tracking-wide drop-shadow-md">
+        Ananya & Kabir
+      </h2>
+      <p class="font-serifHead text-xs md:text-sm font-bold tracking-[0.25em] text-antiqueGold/90 uppercase mt-2">
+        Engagement & Ring Ceremony
+      </p>
+    </div>
+
+    <!-- Centered Wax Seal Button Badge -->
+    <div class="relative z-30 flex flex-col items-center">
+      <button 
+        type="button" 
+        id="waxSealBtn"
+        onclick="openInvitationEnvelope()"
+        aria-label="Open Royal Invitation"
+        class="wax-seal-badge w-28 h-36 md:w-32 md:h-40 rounded-[50%] flex flex-col items-center justify-center cursor-pointer border-2 border-[#D2BE9B] relative group outline-none select-none"
+      >
+        <div class="w-[88%] h-[90%] rounded-[50%] border-2 border-dashed border-[#8A7352]/50 flex flex-col items-center justify-center p-2 text-center text-[#4A3D2A]">
+          <i data-lucide="flower-2" class="w-7 h-7 mb-0.5 text-[#6D5A3A]"></i>
+          <span id="displaySealMonogram" class="font-royal font-black text-base md:text-lg tracking-widest text-[#3B301F]">A & K</span>
+          <span class="text-[9px] font-serifHead font-bold uppercase tracking-wider text-[#6D5A3A] mt-0.5">28 . 11 . 26</span>
+        </div>
+      </button>
+
+      <!-- Click Prompt with Pulsing Rings -->
+      <div class="mt-6 flex flex-col items-center pointer-events-none animate-bounce">
+        <span class="text-xs md:text-sm font-serifHead uppercase tracking-[0.3em] font-extrabold text-parchment drop-shadow">
+          Tap Seal To Open
+        </span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-antiqueGold mt-1"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. STICKY TOP NAVBAR WITH PROFILE/EDIT BTN -->
+  <!-- ========================================== -->
+  <header class="sticky top-0 z-40 bg-olive-900/90 backdrop-blur-md border-b border-antiqueGold/30 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-antiqueGold/20 border border-antiqueGold flex items-center justify-center text-antiqueGold font-royal font-bold text-sm">
+          <span id="displayNavMonogram">A & K</span>
+        </div>
+        <div>
+          <h1 class="font-serifHead font-bold text-sm tracking-widest text-parchment">ROYAL CEREMONY</h1>
+          <p class="text-[10px] font-serifHead uppercase tracking-wider text-antiqueGold">Jaipur Heritage</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 md:gap-3">
+        <!-- Sound Effect Toggle -->
+        <button 
+          onclick="playCeremonyChime()" 
+          title="Play Auspicious Sitar Chime"
+          class="p-2.5 rounded-full border border-antiqueGold/50 bg-olive-800/80 text-antiqueGold hover:bg-antiqueGold hover:text-olive-deep transition-colors"
+        >
+          <i data-lucide="music" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Profile / Edit Website Button -->
+        <button 
+          onclick="toggleEditDrawer(true)" 
+          class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-antiqueGold to-antiqueGold-light text-olive-deep font-serifHead font-extrabold text-xs tracking-wider shadow-lg hover:brightness-105 active:scale-95 transition-all"
+        >
+          <i data-lucide="user-cog" class="w-4 h-4 text-olive-deep"></i>
+          <span>PROFILE / EDIT</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 3. MAIN SCROLLING INVITATION CONTENT       -->
+  <!-- ========================================== -->
+  <main class="relative z-10 max-w-4xl mx-auto px-4 py-8 md:py-16 space-y-16 md:space-y-24">
+
+    <!-- 0. AUSPICIOUS GANESH SHLOKA INVOCATION -->
+    <section class="text-center">
+      <div class="inline-block p-4 md:p-6 rounded-3xl bg-olive-900/80 backdrop-blur-md border border-antiqueGold/40 shadow-xl max-w-xl mx-auto">
+        <div class="w-10 h-10 mx-auto rounded-full bg-antiqueGold/20 border border-antiqueGold/60 flex items-center justify-center text-antiqueGold mb-2">
+          <i data-lucide="sun" class="w-5 h-5"></i>
+        </div>
+        <p class="font-royal text-sm md:text-base font-bold text-antiqueGold tracking-widest mb-1">
+          ॥ श्री गणेशाय नमः ॥
+        </p>
+        <p class="font-scriptCursive italic text-xs md:text-sm text-parchment-200">
+          "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥"
+        </p>
+        <p class="text-[10px] font-serifHead uppercase tracking-wider text-antiqueGold/80 mt-1">
+          Seeking divine blessings of Lord Ganesha for an auspicious new beginning
+        </p>
+      </div>
+    </section>
+
+    <!-- HERO INVITATION SECTION -->
+    <section class="text-center relative">
+      <div class="bg-olive-900/85 backdrop-blur-md rounded-3xl border-2 border-antiqueGold/50 p-6 md:p-12 shadow-2xl relative overflow-hidden">
+        <!-- Subtle corner ornaments -->
+        <div class="absolute top-3 left-3 text-antiqueGold/40"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
+        <div class="absolute top-3 right-3 text-antiqueGold/40"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
+
+        <p class="text-xs md:text-sm font-serifHead uppercase tracking-[0.35em] text-antiqueGold font-bold mb-3">
+          || Shubh Vivah Muhurat ||
+        </p>
+
+        <h2 class="font-royal text-3xl md:text-5xl lg:text-6xl font-black text-parchment leading-tight tracking-wide mb-3">
+          <span id="displayBrideNameHero">Ananya Sharma</span>
+          <span class="block text-2xl md:text-4xl text-antiqueGold my-2 font-scriptCursive italic font-semibold">&</span>
+          <span id="displayGroomNameHero">Kabir Rathore</span>
+        </h2>
+
+        <p class="font-serifHead uppercase tracking-widest text-xs md:text-sm text-parchment-200 font-bold mb-6">
+          Cordially invite you to celebrate their Engagement & Ring Ceremony
+        </p>
+
+        <div class="inline-flex flex-wrap items-center justify-center gap-3 px-6 py-2.5 rounded-full border border-antiqueGold/60 bg-olive-800/80 text-parchment font-serifHead font-bold text-xs md:text-sm">
+          <i data-lucide="calendar" class="w-4 h-4 text-antiqueGold"></i>
+          <span id="displayDateHero">Saturday, November 28, 2026</span>
+          <span class="text-antiqueGold">•</span>
+          <span id="displayMuhuratHero">06:45 PM Onwards</span>
+        </div>
+
+        <!-- Add to Calendar Buttons -->
+        <div class="mt-4 flex flex-wrap justify-center gap-3">
+          <button onclick="addToGoogleCalendar()" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-olive-800/90 border border-antiqueGold/50 text-[11px] font-serifHead font-bold text-parchment hover:bg-antiqueGold hover:text-olive-deep transition-all">
+            <i data-lucide="calendar-plus" class="w-3.5 h-3.5 text-antiqueGold"></i>
+            <span>Add to Google Calendar</span>
+          </button>
+          <button onclick="downloadIcsFile()" class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-olive-800/90 border border-antiqueGold/50 text-[11px] font-serifHead font-bold text-parchment hover:bg-antiqueGold hover:text-olive-deep transition-all">
+            <i data-lucide="download" class="w-3.5 h-3.5 text-antiqueGold"></i>
+            <span>Download .ICS (Apple/Outlook)</span>
+          </button>
+        </div>
+
+        <!-- Live Countdown Widget -->
+        <div class="mt-8 pt-8 border-t border-antiqueGold/20 grid grid-cols-4 gap-2 md:gap-4 max-w-md mx-auto">
+          <div class="bg-olive-800/90 rounded-2xl p-2.5 border border-antiqueGold/30">
+            <span id="timerDays" class="block font-royal font-black text-lg md:text-2xl text-antiqueGold">00</span>
+            <span class="text-[9px] md:text-[10px] uppercase font-bold tracking-wider text-parchment-300">Days</span>
+          </div>
+          <div class="bg-olive-800/90 rounded-2xl p-2.5 border border-antiqueGold/30">
+            <span id="timerHours" class="block font-royal font-black text-lg md:text-2xl text-antiqueGold">00</span>
+            <span class="text-[9px] md:text-[10px] uppercase font-bold tracking-wider text-parchment-300">Hours</span>
+          </div>
+          <div class="bg-olive-800/90 rounded-2xl p-2.5 border border-antiqueGold/30">
+            <span id="timerMinutes" class="block font-royal font-black text-lg md:text-2xl text-antiqueGold">00</span>
+            <span class="text-[9px] md:text-[10px] uppercase font-bold tracking-wider text-parchment-300">Mins</span>
+          </div>
+          <div class="bg-olive-800/90 rounded-2xl p-2.5 border border-antiqueGold/30">
+            <span id="timerSeconds" class="block font-royal font-black text-lg md:text-2xl text-antiqueGold">00</span>
+            <span class="text-[9px] md:text-[10px] uppercase font-bold tracking-wider text-parchment-300">Secs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUPLE ARCH CARDS -->
+    <section class="space-y-6">
+      <div class="text-center">
+        <h3 class="font-royal text-2xl md:text-3xl font-extrabold text-parchment">The Couple</h3>
+        <p class="text-xs font-serifHead uppercase tracking-widest text-antiqueGold font-bold mt-1">Two Souls, One Royal Destiny</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Bride Card -->
+        <div class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 flex flex-col items-center text-center shadow-xl">
+          <div class="w-44 h-56 jharokha-arch overflow-hidden border-2 border-antiqueGold p-1.5 bg-olive-800 mb-4 shadow-inner">
+            <img id="displayBridePhoto" src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" alt="Bride Portrait" class="w-full h-full object-cover jharokha-arch" />
+          </div>
+          <h4 id="displayBrideCard" class="font-serifHead font-extrabold text-xl text-parchment">Ananya Sharma</h4>
+          <p id="displayBrideParents" class="text-xs text-antiqueGold font-semibold mt-1">D/o Smt. Sunita & Shri Rajesh Sharma</p>
+          <p id="displayBrideBio" class="mt-3 text-xs md:text-sm font-scriptCursive italic text-parchment-200">
+            "A heart rooted in tradition, graceful like the peacock gardens of Amber Palace."
+          </p>
+        </div>
+
+        <!-- Groom Card -->
+        <div class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 flex flex-col items-center text-center shadow-xl">
+          <div class="w-44 h-56 jharokha-arch overflow-hidden border-2 border-antiqueGold p-1.5 bg-olive-800 mb-4 shadow-inner">
+            <img id="displayGroomPhoto" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Groom Portrait" class="w-full h-full object-cover jharokha-arch" />
+          </div>
+          <h4 id="displayGroomCard" class="font-serifHead font-extrabold text-xl text-parchment">Kabir Rathore</h4>
+          <p id="displayGroomParents" class="text-xs text-antiqueGold font-semibold mt-1">S/o Smt. Meenakshi & Shri Vikram Rathore</p>
+          <p id="displayGroomBio" class="mt-3 text-xs md:text-sm font-scriptCursive italic text-parchment-200">
+            "Noble in spirit and guided by familial warmth, ready to begin this royal chapter."
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: THE ETERNAL CIRCLE (RING CEREMONY SYMBOLISM) -->
+    <section class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 md:p-10 shadow-xl text-center space-y-4">
+      <div class="w-12 h-12 rounded-full bg-antiqueGold/20 border border-antiqueGold text-antiqueGold flex items-center justify-center mx-auto">
+        <i data-lucide="gem" class="w-6 h-6"></i>
+      </div>
+      <h3 class="font-royal text-2xl md:text-3xl font-extrabold text-parchment">The Eternal Circle</h3>
+      <p class="text-xs font-serifHead uppercase tracking-widest text-antiqueGold font-bold">The Sacred Promise of Sagan & Rings</p>
+      <div class="max-w-2xl mx-auto space-y-3 text-xs md:text-sm text-parchment-200 leading-relaxed">
+        <p>
+          A circle has no beginning and no end; it signifies infinity, devotion, and completeness. The exchange of rings is an eternal pledge of trust, companionship, and everlasting love between two souls and two families.
+        </p>
+        <div class="p-3 bg-olive-800/80 rounded-2xl border border-antiqueGold/30 italic text-antiqueGold font-scriptCursive text-base">
+          "With this ring, I give you my heart, my promise, and my tomorrow."
+        </div>
+      </div>
+    </section>
+
+    <!-- CEREMONY ITINERARY TIMELINE (EXPANDED TO 4-STAGE) -->
+    <section class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 md:p-10 shadow-xl">
+      <div class="text-center mb-10">
+        <h3 class="font-royal text-2xl md:text-3xl font-extrabold text-parchment">Ceremony Itinerary</h3>
+        <p class="text-xs font-serifHead uppercase tracking-widest text-antiqueGold font-bold mt-1">Auspicious Program & Celebrations</p>
+      </div>
+
+      <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-antiqueGold/30">
+        <!-- Event 1 -->
+        <div class="relative flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div class="md:w-1/2 md:text-right md:pr-8 pl-10 md:pl-0">
+            <span id="displayEvent1Time" class="inline-block px-3 py-1 rounded-full bg-antiqueGold text-olive-deep font-serifHead font-extrabold text-xs mb-1">05:30 PM</span>
+            <h4 id="displayEvent1Title" class="font-serifHead font-bold text-base md:text-lg text-parchment">Shahi Swagat & Tilak Dastoor</h4>
+            <p id="displayEvent1Desc" class="text-xs text-parchment-300 mt-1">Traditional Rajasthani welcome with nagada beats, rose petals shower, and tilak ceremony.</p>
+          </div>
+          <div class="absolute left-2.5 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-antiqueGold border-4 border-olive-900"></div>
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="relative flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div class="hidden md:block md:w-1/2"></div>
+          <div class="absolute left-2.5 md:left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-antiqueGold-light border-4 border-olive-900 animate-pulse"></div>
+          <div class="md:w-1/2 md:pl-8 pl-10">
+            <span id="displayMuhuratTimeline" class="inline-block px-3 py-1 rounded-full bg-jaipurClay text-parchment font-serifHead font-extrabold text-xs mb-1">06:45 PM</span>
+            <h4 id="displayEvent2Title" class="font-serifHead font-bold text-base md:text-lg text-parchment">The Ring Exchange Ceremony</h4>
+            <p id="displayEvent2Desc" class="text-xs text-parchment-300 mt-1">Exchange of bands amidst Vedic hymns, auspicious chimes, and celebratory petals shower.</p>
+          </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="relative flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div class="md:w-1/2 md:text-right md:pr-8 pl-10 md:pl-0">
+            <span id="displayEvent3Time" class="inline-block px-3 py-1 rounded-full bg-antiqueGold text-olive-deep font-serifHead font-extrabold text-xs mb-1">08:00 PM Onwards</span>
+            <h4 id="displayEvent3Title" class="font-serifHead font-bold text-base md:text-lg text-parchment">Shahi Dawat & Royal Feast</h4>
+            <p id="displayEvent3Desc" class="text-xs text-parchment-300 mt-1">Authentic culinary spread highlighting Rajasthani flavors, live counters, and royal desserts.</p>
+          </div>
+          <div class="absolute left-2.5 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-antiqueGold border-4 border-olive-900"></div>
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+
+        <!-- Event 4 (New) -->
+        <div class="relative flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div class="hidden md:block md:w-1/2"></div>
+          <div class="absolute left-2.5 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-antiqueGold border-4 border-olive-900"></div>
+          <div class="md:w-1/2 md:pl-8 pl-10">
+            <span class="inline-block px-3 py-1 rounded-full bg-antiqueGold text-olive-deep font-serifHead font-extrabold text-xs mb-1">09:15 PM Till Late</span>
+            <h4 class="font-serifHead font-bold text-base md:text-lg text-parchment">Sangeet Mehfil & Dhol Night</h4>
+            <p class="text-xs text-parchment-300 mt-1">Live musical folk fusion performances, family dance surprises, and DJ celebration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: ROYAL DRESS CODE / ATTIRE PALETTE -->
+    <section class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 md:p-10 shadow-xl text-center space-y-6">
+      <div>
+        <div class="w-12 h-12 rounded-full bg-antiqueGold/20 border border-antiqueGold text-antiqueGold flex items-center justify-center mx-auto mb-2">
+          <i data-lucide="sparkle" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-royal text-2xl md:text-3xl font-extrabold text-parchment">Royal Attire & Color Palette</h3>
+        <p class="text-xs font-serifHead uppercase tracking-widest text-antiqueGold font-bold mt-1">
+          Theme: Royal Pastels & Heritage Elegance
+        </p>
+        <p class="text-xs md:text-sm text-parchment-200 mt-2 max-w-lg mx-auto">
+          We warmly encourage our guests to dress in gentle pastel tones or regal ethnic wear. Tap any swatch to copy its color code:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+        <!-- Swatch 1 -->
+        <button onclick="copySwatchCode('#64775D', 'Sage Olive')" class="group p-3 rounded-2xl bg-olive-800/80 border border-antiqueGold/40 flex flex-col items-center hover:scale-105 transition-transform">
+          <div class="w-12 h-12 rounded-full mb-2 border border-parchment/30 shadow-md" style="background-color: #64775D;"></div>
+          <span class="font-serifHead text-xs font-bold text-parchment">Sage Olive</span>
+          <span class="text-[10px] text-antiqueGold font-mono">#64775D</span>
+        </button>
+
+        <!-- Swatch 2 -->
+        <button onclick="copySwatchCode('#D98980', 'Jaipur Rose')" class="group p-3 rounded-2xl bg-olive-800/80 border border-antiqueGold/40 flex flex-col items-center hover:scale-105 transition-transform">
+          <div class="w-12 h-12 rounded-full mb-2 border border-parchment/30 shadow-md" style="background-color: #D98980;"></div>
+          <span class="font-serifHead text-xs font-bold text-parchment">Jaipur Rose</span>
+          <span class="text-[10px] text-antiqueGold font-mono">#D98980</span>
+        </button>
+
+        <!-- Swatch 3 -->
+        <button onclick="copySwatchCode('#FAF7F0', 'Antique Ivory')" class="group p-3 rounded-2xl bg-olive-800/80 border border-antiqueGold/40 flex flex-col items-center hover:scale-105 transition-transform">
+          <div class="w-12 h-12 rounded-full mb-2 border border-parchment/30 shadow-md" style="background-color: #FAF7F0;"></div>
+          <span class="font-serifHead text-xs font-bold text-parchment">Antique Ivory</span>
+          <span class="text-[10px] text-antiqueGold font-mono">#FAF7F0</span>
+        </button>
+
+        <!-- Swatch 4 -->
+        <button onclick="copySwatchCode('#D4AF37', 'Brushed Gold')" class="group p-3 rounded-2xl bg-olive-800/80 border border-antiqueGold/40 flex flex-col items-center hover:scale-105 transition-transform">
+          <div class="w-12 h-12 rounded-full mb-2 border border-parchment/30 shadow-md" style="background-color: #D4AF37;"></div>
+          <span class="font-serifHead text-xs font-bold text-parchment">Brushed Gold</span>
+          <span class="text-[10px] text-antiqueGold font-mono">#D4AF37</span>
+        </button>
+      </div>
+
+      <div id="swatchToast" class="hidden text-xs font-serifHead font-bold text-antiqueGold bg-olive-800 px-4 py-1.5 rounded-full inline-block border border-antiqueGold/50">
+        Copied to clipboard!
+      </div>
+    </section>
+
+    <!-- VENUE & GOOGLE MAPS -->
+    <section class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 md:p-10 shadow-xl text-center space-y-4">
+      <div class="w-12 h-12 rounded-full bg-antiqueGold/20 border border-antiqueGold text-antiqueGold flex items-center justify-center mx-auto">
+        <i data-lucide="map-pin" class="w-6 h-6"></i>
+      </div>
+      <h3 class="font-royal text-2xl md:text-3xl font-extrabold text-parchment">The Royal Venue</h3>
+      <h4 id="displayVenueName" class="font-serifHead text-xl text-antiqueGold font-bold">The Jai Bagh Palace</h4>
+      <p id="displayVenueDesc" class="text-xs md:text-sm text-parchment-200 max-w-xl mx-auto">
+        Kukas, Amer, Jaipur, Rajasthan 302028. Located amidst the serene Aravalli hills, welcoming you with royal Rajput hospitality.
+      </p>
+
+      <!-- Hospitality Concierge amenities -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-xl mx-auto pt-3">
+        <div class="p-3 rounded-2xl bg-olive-800/80 border border-antiqueGold/30 flex items-center justify-center gap-2 text-xs text-parchment">
+          <i data-lucide="car" class="w-4 h-4 text-antiqueGold"></i>
+          <span>Valet Parking Available</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-olive-800/80 border border-antiqueGold/30 flex items-center justify-center gap-2 text-xs text-parchment">
+          <i data-lucide="shield-check" class="w-4 h-4 text-antiqueGold"></i>
+          <span>Guest Hospitality Helpdesk</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-olive-800/80 border border-antiqueGold/30 flex items-center justify-center gap-2 text-xs text-parchment">
+          <i data-lucide="plane-takeoff" class="w-4 h-4 text-antiqueGold"></i>
+          <span>Transfer Assistance</span>
+        </div>
+      </div>
+
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-3">
+        <a 
+          id="btnGoogleMaps" 
+          href="https://www.google.com/maps/search/?api=1&query=The+Jai+Bagh+Palace+Jaipur" 
+          target="_blank" 
+          rel="noopener"
+          class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-antiqueGold text-olive-deep font-serifHead font-bold text-xs uppercase tracking-wider shadow-lg hover:bg-antiqueGold-light transition-all"
+        >
+          <i data-lucide="navigation" class="w-4 h-4"></i>
+          <span>Open in Google Maps</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: INTERACTIVE RSVP & LIVE BLESSING WALL -->
+    <section class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 md:p-10 shadow-xl space-y-8">
+      <div class="text-center">
+        <div class="w-12 h-12 rounded-full bg-antiqueGold/20 border border-antiqueGold text-antiqueGold flex items-center justify-center mx-auto mb-2">
+          <i data-lucide="message-square-heart" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-royal text-2xl md:text-3xl font-extrabold text-parchment">Blessings & RSVP</h3>
+        <p class="text-xs font-serifHead uppercase tracking-widest text-antiqueGold font-bold mt-1">Send Your Warm Wishes to the Couple</p>
+      </div>
+
+      <!-- RSVP Form -->
+      <form onsubmit="handleGuestbookSubmit(event)" class="max-w-xl mx-auto space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Your Name</label>
+            <input type="text" id="guestNameInput" required placeholder="e.g. Ramesh & Sunita Verma" class="w-full px-3.5 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs placeholder:text-parchment/40 focus:border-antiqueGold outline-none" />
+          </div>
+          <div>
+            <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Attending Status</label>
+            <select id="guestAttendingInput" class="w-full px-3.5 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs focus:border-antiqueGold outline-none">
+              <option value="Joyfully Attending">Joyfully Attending (In Person)</option>
+              <option value="Sending Blessings from Afar">Sending Blessings from Afar</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Blessing Message</label>
+          <textarea id="guestMessageInput" required rows="2" placeholder="Write your heartfelt wishes for Ananya & Kabir..." class="w-full px-3.5 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs placeholder:text-parchment/40 focus:border-antiqueGold outline-none resize-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-antiqueGold text-olive-deep font-serifHead font-extrabold text-xs uppercase tracking-wider shadow-lg hover:bg-antiqueGold-light transition-all flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          <span>Send Blessings</span>
+        </button>
+      </form>
+
+      <!-- Live Blessing Wall Posts -->
+      <div class="pt-6 border-t border-antiqueGold/20">
+        <h4 class="font-serifHead text-xs uppercase tracking-widest text-antiqueGold font-bold mb-4 text-center">
+          Recent Warm Wishes
+        </h4>
+        <div id="blessingsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-3.5 rounded-2xl bg-olive-800/80 border border-antiqueGold/30 space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="font-serifHead font-bold text-xs text-parchment">Vikramaditya & Gayatri</span>
+              <span class="text-[10px] text-antiqueGold font-medium">Family Friend</span>
+            </div>
+            <p class="text-xs text-parchment-200 font-scriptCursive italic">"Wishing you both an eternity of love, friendship, and joy as you begin this regal journey together!"</p>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-olive-800/80 border border-antiqueGold/30 space-y-1">
+            <div class="flex justify-between items-center">
+              <span class="font-serifHead font-bold text-xs text-parchment">Col. R. S. Rathore</span>
+              <span class="text-[10px] text-antiqueGold font-medium">Elder Blessings</span>
+            </div>
+            <p class="text-xs text-parchment-200 font-scriptCursive italic">"May the almighty bless Ananya and Kabir with abundance, harmony, and togetherness always."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: HOST FAMILY CONTACT & WHATSAPP ASSISTANCE -->
+    <section class="bg-olive-900/85 backdrop-blur-md rounded-3xl border border-antiqueGold/40 p-6 md:p-8 shadow-xl text-center space-y-4">
+      <h3 class="font-royal text-xl md:text-2xl font-extrabold text-parchment">Host Family Coordinators</h3>
+      <p class="text-xs font-serifHead uppercase tracking-widest text-antiqueGold font-bold">For Any Travel & Hospitality Queries</p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto pt-2">
+        <div class="p-4 rounded-2xl bg-olive-800/90 border border-antiqueGold/30 text-left">
+          <p class="font-serifHead font-bold text-xs text-parchment">Shri Rajesh Sharma</p>
+          <p class="text-[11px] text-antiqueGold">Bride's Family</p>
+          <div class="mt-3 flex gap-2">
+            <a href="tel:+919876543210" class="flex-1 py-1 px-2 rounded-lg bg-olive-700 text-parchment text-[11px] font-bold flex items-center justify-center gap-1 border border-antiqueGold/40">
+              <i data-lucide="phone" class="w-3 h-3 text-antiqueGold"></i> Call
+            </a>
+            <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="flex-1 py-1 px-2 rounded-lg bg-green-700 text-white text-[11px] font-bold flex items-center justify-center gap-1">
+              <i data-lucide="message-circle" class="w-3 h-3"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-olive-800/90 border border-antiqueGold/30 text-left">
+          <p class="font-serifHead font-bold text-xs text-parchment">Shri Vikram Rathore</p>
+          <p class="text-[11px] text-antiqueGold">Groom's Family</p>
+          <div class="mt-3 flex gap-2">
+            <a href="tel:+919876543211" class="flex-1 py-1 px-2 rounded-lg bg-olive-700 text-parchment text-[11px] font-bold flex items-center justify-center gap-1 border border-antiqueGold/40">
+              <i data-lucide="phone" class="w-3 h-3 text-antiqueGold"></i> Call
+            </a>
+            <a href="https://wa.me/919876543211" target="_blank" rel="noopener" class="flex-1 py-1 px-2 rounded-lg bg-green-700 text-white text-[11px] font-bold flex items-center justify-center gap-1">
+              <i data-lucide="message-circle" class="w-3 h-3"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOST SIGN-OFF & FOOTER -->
+    <footer class="text-center py-8 border-t border-antiqueGold/20 space-y-3">
+      <p id="displayFooterQuote" class="font-scriptCursive italic text-lg md:text-xl text-antiqueGold">
+        "Your gracious presence will double our joy and make this auspicious evening forever memorable."
+      </p>
+      <p id="displayFamilyName" class="font-royal font-bold text-sm md:text-base text-parchment">
+        The Sharma & Rathore Families
+      </p>
+      <p class="text-[11px] font-serifHead uppercase tracking-[0.25em] text-antiqueGold/70">
+        Padharo Mhare Desh
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 4. PROFILE / LIVE CUSTOMIZER DRAWER        -->
+  <!-- ========================================== -->
+  <div id="drawerBackdrop" onclick="toggleEditDrawer(false)" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+  <aside id="royalEditDrawer" class="fixed top-0 right-0 z-50 w-full max-w-md h-full bg-olive-900 border-l border-antiqueGold/40 text-parchment shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+    
+    <!-- Drawer Header -->
+    <div class="p-4 border-b border-antiqueGold/30 flex items-center justify-between bg-olive-900/90">
+      <div class="flex items-center gap-2">
+        <i data-lucide="palette" class="w-5 h-5 text-antiqueGold"></i>
+        <h3 class="font-serifHead font-extrabold text-sm tracking-wider uppercase text-parchment">Royal Profile Studio</h3>
+      </div>
+      <button onclick="toggleEditDrawer(false)" class="p-1 rounded-lg text-parchment/70 hover:text-parchment">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Scrollable Edit Form -->
+    <div class="flex-1 overflow-y-auto p-5 space-y-6 text-left">
+      
+      <!-- Couple Names -->
+      <div class="space-y-3">
+        <span class="block text-xs uppercase font-serifHead font-bold tracking-widest text-antiqueGold">Couple Names</span>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Bride Name</label>
+          <input type="text" id="editBrideName" value="Ananya Sharma" class="w-full px-3.5 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment focus:border-antiqueGold outline-none text-xs" />
+        </div>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Groom Name</label>
+          <input type="text" id="editGroomName" value="Kabir Rathore" class="w-full px-3.5 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment focus:border-antiqueGold outline-none text-xs" />
+        </div>
+      </div>
+
+      <!-- Lineage & Parents -->
+      <div class="space-y-3 pt-3 border-t border-antiqueGold/20">
+        <span class="block text-xs uppercase font-serifHead font-bold tracking-widest text-antiqueGold">Lineage & Parents</span>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Bride Parents</label>
+          <input type="text" id="editBrideParents" value="D/o Smt. Sunita & Shri Rajesh Sharma" class="w-full px-3 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment focus:border-antiqueGold outline-none text-xs" />
+        </div>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Groom Parents</label>
+          <input type="text" id="editGroomParents" value="S/o Smt. Meenakshi & Shri Vikram Rathore" class="w-full px-3 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment focus:border-antiqueGold outline-none text-xs" />
+        </div>
+      </div>
+
+      <!-- Photos Upload / URLs -->
+      <div class="space-y-3 pt-3 border-t border-antiqueGold/20">
+        <span class="block text-xs uppercase font-serifHead font-bold tracking-widest text-antiqueGold">Couple Portraits</span>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Bride Photo (URL or File)</label>
+          <div class="flex gap-2">
+            <input type="url" id="editBridePhotoUrl" value="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" class="flex-1 px-3 py-1.5 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs" />
+            <label class="cursor-pointer px-3 py-1.5 bg-antiqueGold text-olive-deep rounded-xl text-xs font-bold flex items-center">
+              <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+              <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'displayBridePhoto', 'editBridePhotoUrl')" />
+            </label>
+          </div>
+        </div>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Groom Photo (URL or File)</label>
+          <div class="flex gap-2">
+            <input type="url" id="editGroomPhotoUrl" value="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" class="flex-1 px-3 py-1.5 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs" />
+            <label class="cursor-pointer px-3 py-1.5 bg-antiqueGold text-olive-deep rounded-xl text-xs font-bold flex items-center">
+              <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+              <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'displayGroomPhoto', 'editGroomPhotoUrl')" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date & Muhurat -->
+      <div class="space-y-3 pt-3 border-t border-antiqueGold/20">
+        <span class="block text-xs uppercase font-serifHead font-bold tracking-widest text-antiqueGold">Date & Timings</span>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Ceremony Date</label>
+            <input type="date" id="editCeremonyDate" value="2026-11-28" class="w-full px-3 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs" />
+          </div>
+          <div>
+            <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Muhurat Time</label>
+            <input type="text" id="editMuhuratTime" value="06:45 PM Onwards" class="w-full px-3 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Venue & Location -->
+      <div class="space-y-3 pt-3 border-t border-antiqueGold/20">
+        <span class="block text-xs uppercase font-serifHead font-bold tracking-widest text-antiqueGold">Venue & Setting</span>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Palace / Venue Name</label>
+          <input type="text" id="editVenueName" value="The Jai Bagh Palace" class="w-full px-3.5 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs" />
+        </div>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Address & Region Details</label>
+          <textarea id="editVenueDesc" rows="2" class="w-full px-3.5 py-2 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs resize-none">Kukas, Amer, Jaipur, Rajasthan 302028. Located amidst the serene Aravalli hills, welcoming you with royal Rajput hospitality.</textarea>
+        </div>
+      </div>
+
+      <!-- Background Preset & Opacity Slider -->
+      <div class="space-y-3 pt-3 border-t border-antiqueGold/20">
+        <span class="block text-xs uppercase font-serifHead font-bold tracking-widest text-antiqueGold">Background Preset & Clarity</span>
+        
+        <!-- Live Opacity Slider -->
+        <div class="p-3 rounded-xl bg-olive-800/80 border border-antiqueGold/30 space-y-1.5">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-serifHead font-bold text-parchment-200">Taj Mahal Clarity / Opacity</span>
+            <span id="opacityValLabel" class="text-antiqueGold font-bold">85%</span>
+          </div>
+          <input type="range" id="bgOpacitySlider" min="20" max="100" value="85" oninput="changeBgOpacity(this.value)" class="w-full accent-antiqueGold cursor-pointer" />
+        </div>
+
+        <div class="grid grid-cols-4 gap-2">
+          <button type="button" onclick="setPalaceBg('tajmahal')" class="p-1.5 rounded-xl border border-antiqueGold bg-olive-800 text-center transition-all shadow">
+            <span class="block text-[10px] font-serifHead font-bold text-antiqueGold">Taj Mahal</span>
+          </button>
+          <button type="button" onclick="setPalaceBg('amber')" class="p-1.5 rounded-xl border border-antiqueGold/50 hover:border-antiqueGold bg-olive-800 text-center transition-all">
+            <span class="block text-[10px] font-serifHead font-bold text-parchment">Amber Fort</span>
+          </button>
+          <button type="button" onclick="setPalaceBg('citypalace')" class="p-1.5 rounded-xl border border-antiqueGold/50 hover:border-antiqueGold bg-olive-800 text-center transition-all">
+            <span class="block text-[10px] font-serifHead font-bold text-parchment">City Palace</span>
+          </button>
+          <button type="button" onclick="setPalaceBg('jalmahal')" class="p-1.5 rounded-xl border border-antiqueGold/50 hover:border-antiqueGold bg-olive-800 text-center transition-all">
+            <span class="block text-[10px] font-serifHead font-bold text-parchment">Jal Mahal</span>
+          </button>
+        </div>
+        <div>
+          <label class="block text-[11px] uppercase font-bold text-parchment-200 mb-1">Background Image URL / File</label>
+          <div class="flex gap-2">
+            <input type="url" id="editBgUrl" value="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2600&q=95" class="flex-1 px-3 py-1.5 rounded-xl bg-olive-800 border border-antiqueGold/40 text-parchment text-xs" />
+            <label class="cursor-pointer px-3 py-1.5 bg-antiqueGold text-olive-deep rounded-xl text-xs font-bold flex items-center">
+              <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+              <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'palaceBgLayer', 'editBgUrl', true)" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Drawer Footer Actions -->
+    <div class="p-4 border-t border-antiqueGold/30 bg-olive-900 flex gap-2">
+      <button type="button" onclick="resetDefaults()" class="flex-1 py-2.5 rounded-xl border border-antiqueGold/40 text-antiqueGold hover:bg-olive-800 font-serifHead font-bold text-xs uppercase">
+        Reset
+      </button>
+      <button type="button" onclick="applyCustomizationUpdates()" class="flex-1 py-2.5 rounded-xl bg-antiqueGold text-olive-deep hover:bg-antiqueGold-light font-serifHead font-extrabold text-xs uppercase shadow-lg">
+        Save & Apply
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- 5. JAVASCRIPT LOGIC                        -->
+  <!-- ========================================== -->
+  <script>
+    // Safe text setter
+    function safeSetText(id, text) {
+      const el = document.getElementById(id);
+      if (el && text !== undefined) el.textContent = text;
+    }
+
+    // Safe value getter
+    function safeGetValue(id, fallback = '') {
+      const el = document.getElementById(id);
+      return el ? el.value : fallback;
+    }
+
+    // Open/Close Customizer Drawer
+    function toggleEditDrawer(open) {
+      const drawer = document.getElementById('royalEditDrawer');
+      const overlay = document.getElementById('drawerBackdrop');
+      if (!drawer || !overlay) return;
+
+      if (open) {
+        drawer.classList.remove('translate-x-full');
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.add('translate-x-full');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        overlay.classList.remove('opacity-100');
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    // Background Opacity / Clarity Slider
+    function changeBgOpacity(val) {
+      const layer = document.getElementById('palaceBgLayer');
+      const veil = document.querySelector('.palace-green-veil');
+      const label = document.getElementById('opacityValLabel');
+      
+      const numVal = Math.min(100, Math.max(10, Number(val) || 85));
+      if (layer) {
+        layer.style.opacity = (numVal / 100).toString();
+      }
+      if (veil) {
+        const veilAlpha = Math.max(0.15, 0.75 - (numVal / 200));
+        veil.style.background = `radial-gradient(circle at 50% 30%, rgba(35, 45, 32, ${veilAlpha * 0.5}) 0%, rgba(22, 29, 20, ${veilAlpha * 0.9}) 60%, rgba(14, 18, 13, ${veilAlpha * 1.2}) 100%)`;
+      }
+      if (label) {
+        label.textContent = `${numVal}%`;
+      }
+    }
+
+    // Set Preset Background
+    function setPalaceBg(preset) {
+      const presets = {
+        tajmahal: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2600&q=95",
+        amber: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=2400&q=85",
+        citypalace: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=2400&q=85",
+        jalmahal: "https://images.unsplash.com/photo-1609137144822-2612a4413ef6?auto=format&fit=crop&w=2400&q=85"
+      };
+
+      const selected = presets[preset] || presets.tajmahal;
+      const bgInput = document.getElementById('editBgUrl');
+      const bgLayer = document.getElementById('palaceBgLayer');
+      
+      if (bgInput) bgInput.value = selected;
+      if (bgLayer) bgLayer.style.backgroundImage = `url('${selected}')`;
+    }
+
+    // Image Upload Handler
+    function handleImageUpload(event, targetElementId, inputUrlId, isBackground = false) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const resultUrl = e.target.result;
+        const target = document.getElementById(targetElementId);
+        const urlInput = document.getElementById(inputUrlId);
+
+        if (urlInput) urlInput.value = resultUrl;
+        if (target) {
+          if (isBackground) {
+            target.style.backgroundImage = `url('${resultUrl}')`;
+          } else {
+            target.src = resultUrl;
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Copy Swatch Hex Code Helper
+    function copySwatchCode(hex, name) {
+      const el = document.createElement('textarea');
+      el.value = hex;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      const toast = document.getElementById('swatchToast');
+      if (toast) {
+        toast.textContent = `Copied ${name} (${hex}) to clipboard!`;
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 2500);
+      }
+    }
+
+    // Add to Google Calendar Link generator
+    function addToGoogleCalendar() {
+      const title = encodeURIComponent("Engagement & Ring Ceremony: Ananya & Kabir");
+      const details = encodeURIComponent("Join us in celebrating the auspicious engagement and ring ceremony of Ananya & Kabir at The Jai Bagh Palace, Kukas, Jaipur.");
+      const location = encodeURIComponent("The Jai Bagh Palace, Kukas, Amer, Jaipur, Rajasthan 302028");
+      const dates = "20261128T131500Z/20261128T183000Z"; // UTC representation
+      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+      window.open(url, '_blank');
+    }
+
+    // Download .ICS calendar event file
+    function downloadIcsFile() {
+      const icsContent = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Jaipur Royal Engagement//Ananya & Kabir//EN
+BEGIN:VEVENT
+UID:${Date.now()}@jaipur-engagement.wedding
+DTSTAMP:20261101T000000Z
+DTSTART:20261128T131500Z
+DTEND:20261128T183000Z
+SUMMARY:Engagement & Ring Ceremony: Ananya & Kabir
+DESCRIPTION:Auspicious Engagement & Ring Ceremony of Ananya and Kabir at Jaipur.
+LOCATION:The Jai Bagh Palace, Kukas, Amer, Jaipur, Rajasthan 302028
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR`;
+
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', 'Ananya_Kabir_Engagement.ics');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Guestbook submission handler
+    function handleGuestbookSubmit(event) {
+      event.preventDefault();
+      const nameInput = document.getElementById('guestNameInput');
+      const msgInput = document.getElementById('guestMessageInput');
+      const attendingInput = document.getElementById('guestAttendingInput');
+      const container = document.getElementById('blessingsContainer');
+
+      if (!nameInput || !msgInput || !container) return;
+
+      const card = document.createElement('div');
+      card.className = "p-3.5 rounded-2xl bg-olive-800/95 border border-antiqueGold shadow-lg space-y-1 animate-fade-in";
+      card.innerHTML = `
+        <div class="flex justify-between items-center">
+          <span class="font-serifHead font-bold text-xs text-parchment">${nameInput.value}</span>
+          <span class="text-[10px] text-antiqueGold font-medium">${attendingInput ? attendingInput.value : 'Attending'}</span>
+        </div>
+        <p class="text-xs text-parchment-200 font-scriptCursive italic">"${msgInput.value}"</p>
+      `;
+
+      container.prepend(card);
+
+      if (window.confetti) {
+        window.confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
+      }
+
+      nameInput.value = '';
+      msgInput.value = '';
+    }
+
+    // Apply Live Changes from Profile Drawer
+    function applyCustomizationUpdates() {
+      const bName = safeGetValue('editBrideName', 'Ananya Sharma');
+      const gName = safeGetValue('editGroomName', 'Kabir Rathore');
+      
+      safeSetText('displayBrideNameHero', bName);
+      safeSetText('displayGroomNameHero', gName);
+      safeSetText('displayCoupleEnvelope', `${bName} & ${gName}`);
+      safeSetText('displayBrideCard', bName);
+      safeSetText('displayGroomCard', gName);
+      
+      const bInitial = bName.trim().charAt(0) || 'A';
+      const gInitial = gName.trim().charAt(0) || 'K';
+      const monogram = `${bInitial} & ${gInitial}`;
+      safeSetText('displayNavMonogram', monogram);
+      safeSetText('displaySealMonogram', monogram);
+
+      safeSetText('displayBrideParents', safeGetValue('editBrideParents'));
+      safeSetText('displayGroomParents', safeGetValue('editGroomParents'));
+
+      const bridePhotoUrl = safeGetValue('editBridePhotoUrl');
+      const groomPhotoUrl = safeGetValue('editGroomPhotoUrl');
+      const brideImg = document.getElementById('displayBridePhoto');
+      const groomImg = document.getElementById('displayGroomPhoto');
+      if (brideImg && bridePhotoUrl) brideImg.src = bridePhotoUrl;
+      if (groomImg && groomPhotoUrl) groomImg.src = groomPhotoUrl;
+
+      const rawDate = safeGetValue('editCeremonyDate', '2026-11-28');
+      const muhuratVal = safeGetValue('editMuhuratTime', '06:45 PM Onwards');
+      safeSetText('displayMuhuratHero', muhuratVal);
+      safeSetText('displayMuhuratTimeline', muhuratVal);
+
+      if (rawDate) {
+        try {
+          const parsedDate = new Date(rawDate + "T18:45:00");
+          if (!isNaN(parsedDate.getTime())) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            safeSetText('displayDateHero', parsedDate.toLocaleDateString('en-US', options));
+          }
+        } catch (e) {
+          console.warn("Date error", e);
+        }
+      }
+
+      const vName = safeGetValue('editVenueName', 'The Jai Bagh Palace');
+      const vDesc = safeGetValue('editVenueDesc');
+      safeSetText('displayVenueName', vName);
+      safeSetText('displayVenueDesc', vDesc);
+
+      const mapsBtn = document.getElementById('btnGoogleMaps');
+      if (mapsBtn) {
+        mapsBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(vName + ' ' + vDesc)}`;
+      }
+
+      const customBgUrl = safeGetValue('editBgUrl');
+      const bgLayer = document.getElementById('palaceBgLayer');
+      if (bgLayer && customBgUrl) {
+        bgLayer.style.backgroundImage = `url('${customBgUrl}')`;
+      }
+
+      toggleEditDrawer(false);
+    }
+
+    // Reset Defaults
+    function resetDefaults() {
+      const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      };
+
+      setVal('editBrideName', "Ananya Sharma");
+      setVal('editGroomName', "Kabir Rathore");
+      setVal('editBrideParents', "D/o Smt. Sunita & Shri Rajesh Sharma");
+      setVal('editGroomParents', "S/o Smt. Meenakshi & Shri Vikram Rathore");
+      setVal('editBridePhotoUrl', "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80");
+      setVal('editGroomPhotoUrl', "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80");
+      setVal('editCeremonyDate', "2026-11-28");
+      setVal('editMuhuratTime', "06:45 PM Onwards");
+      setVal('editVenueName', "The Jai Bagh Palace");
+      setVal('editVenueDesc', "Kukas, Amer, Jaipur, Rajasthan 302028. Located amidst the serene Aravalli hills, welcoming you with royal Rajput hospitality.");
+      setVal('editBgUrl', "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2600&q=95");
+      
+      const slider = document.getElementById('bgOpacitySlider');
+      if (slider) slider.value = 85;
+      changeBgOpacity(85);
+
+      applyCustomizationUpdates();
+    }
+
+    // Synthesized Auspicious Raag Yaman Sitar Chime using Web Audio API
+    function playCeremonyChime() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        if (ctx.state === 'suspended') ctx.resume();
+
+        const notes = [293.66, 369.99, 440.00, 493.88, 587.33, 739.99]; // D, F#, A, B, D, F#
+        notes.forEach((freq, index) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + (index * 0.12));
+
+          gain.gain.setValueAtTime(0, ctx.currentTime + (index * 0.12));
+          gain.gain.linearRampToValueAtTime(0.2, ctx.currentTime + (index * 0.12) + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (index * 0.12) + 1.2);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(ctx.currentTime + (index * 0.12));
+          osc.stop(ctx.currentTime + (index * 0.12) + 1.3);
+        });
+      } catch (err) {
+        console.warn('Audio playback error', err);
+      }
+    }
+
+    // 3D Envelope Opening Animation
+    function openInvitationEnvelope() {
+      playCeremonyChime();
+
+      if (window.confetti) {
+        window.confetti({
+          particleCount: 70,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#D4AF37', '#FAF7F0', '#E8B4B8', '#A5B59E']
+        });
+      }
+
+      const flap = document.getElementById('envelopeFlap');
+      if (flap) flap.classList.add('flap-open');
+
+      setTimeout(() => {
+        const envelope = document.getElementById('sealedEnvelopeScreen');
+        if (envelope) {
+          envelope.classList.add('envelope-dismissed');
+          setTimeout(() => {
+            envelope.style.display = 'none';
+          }, 1000);
+        }
+      }, 700);
+    }
+
+    // Live Countdown Timer
+    function startCountdown() {
+      const targetDate = new Date("2026-11-28T18:45:00").getTime();
+      
+      setInterval(() => {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference > 0) {
+          const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+          safeSetText('timerDays', String(days).padStart(2, '0'));
+          safeSetText('timerHours', String(hours).padStart(2, '0'));
+          safeSetText('timerMinutes', String(minutes).padStart(2, '0'));
+          safeSetText('timerSeconds', String(seconds).padStart(2, '0'));
+        }
+      }, 1000);
+    }
+
+    // Drifting Petals Canvas Engine
+    function initPetalsCanvas() {
+      const canvas = document.getElementById('petalsCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const petals = [];
+      const colors = ['rgba(217, 137, 128, 0.65)', 'rgba(230, 202, 101, 0.6)', 'rgba(250, 247, 240, 0.5)'];
+
+      for (let i = 0; i < 22; i++) {
+        petals.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: Math.random() * 8 + 6,
+          speedY: Math.random() * 1.2 + 0.6,
+          speedX: Math.random() * 0.8 - 0.4,
+          angle: Math.random() * 360,
+          rotationSpeed: Math.random() * 1.5 - 0.75,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        petals.forEach(p => {
+          p.y += p.speedY;
+          p.x += Math.sin(p.y * 0.01) * 0.6;
+          p.angle += p.rotationSpeed;
+
+          if (p.y > height + 20) {
+            p.y = -20;
+            p.x = Math.random() * width;
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.angle * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.restore();
+        });
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    }
+
+    // Initializer
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+      startCountdown();
+      initPetalsCanvas();
+    });
+  </script>
+</body>
+</html>
